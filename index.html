@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="EgoVITA: Learning to Plan and Verify for Egocentric Video Reasoning">
+  <meta name="keywords" content="EgoVITA, Egocentric Video, Reinforcement Learning, GRPO, Video Understanding, MLLM">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EgoVITA: Learning to Plan and Verify for Egocentric Video Reasoning</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+
+  <style>
+    .placeholder-box {
+      padding: 10px;
+      margin: 10px 0;
+      text-align: center;
+      color: #777;
+    }
+    .placeholder-box img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .animated-gradient-title {
+      background-image: linear-gradient(to right, #3273dc, #209cee, #48c774, #ffdd57, #ff6b6b);
+      background-size: 300% auto;
+      color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+      animation: gradient-animation 5s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    @keyframes gradient-animation {
+      0% { background-position: 0% center; }
+      50% { background-position: 100% center; }
+      100% { background-position: 0% center; }
+    }
+
+    .title-icon-image {
+       height: 1em; 
+       width: auto; 
+       vertical-align: middle; 
+       margin-left: 10px;
+       display: inline-block; 
+       animation: wobble 2s ease-in-out infinite;
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      25% { transform: rotate(-5deg) scale(1.1); }
+      75% { transform: rotate(5deg) scale(0.9); }
+    }
+
+  </style>
+
+</head>
+
+<body>
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+         <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            More Research
+          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://people-robots.github.io/VideoSAVi/">
+               VideoSAVi
+             </a>
+             <a class="navbar-item" href="https://people-robots.github.io/VideoPASTA/">
+               VideoPASTA
+             </a>
+             <a class="navbar-item" href="https://people-robots.github.io/AVATAR/">
+               AVATAR
+             </a>
+             </div>
+        </div>
+       </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title is-bold">
+             <span class="animated-gradient-title">EgoVITA</span><img src="static/images/logo.jpg" alt="EgoVITA Icon" class="title-icon-image">
+          </h1>
+           <h2 class="subtitle is-3 publication-subtitle">
+             Learning to Plan and Verify for Egocentric Video Reasoning
+           </h2>
+<div class="is-size-5 publication-authors">
+
+            <span class="author-block"><a href="https://yogkul2000.github.io/">Yogesh Kulkarni</a><sup style="color:#6fbf73;">1</sup>,</span>
+
+            <span class="author-block"><a href="https://www.pooyanfazli.com/">Pooyan Fazli</a><sup style="color:#6fbf73;">1</sup></span>
+
+             </div>
+                       <div class="is-size-5 publication-authors">
+
+             <span class="author-block"><sup style="color:#6fbf73;">1</sup>Arizona State University</span><br>
+
+           </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                 <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+               <span class="link-block">
+                 <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+               <span class="link-block">
+                 <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Coming Soon)</span>
+                  </a>
+              </span>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="content has-text-centered">
+       <div class="placeholder-box">
+         <img src="static/images/teaser.png" alt="EgoVITA Framework Overview" style="width: 70%;">
+       </div>
+       <p>EgoVITA enables safer, structured egocentric reasoning. For first-person queries, it produces grounded, stepwise plans anticipating actions and spatial constraints, whereas baseline models give generic, unsafe, visually ungrounded responses.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Reasoning about intentions and actions from a first-person (egocentric) perspective remains a fundamental challenge for multimodal large language models (MLLMs). Unlike third-person (exocentric) videos that capture scenes from an outside observer, egocentric videos reflect the actor's continuously changing viewpoint, introducing partial observability, limited field of view, and self-referenced motion.
+          </p>
+          <p>
+            We introduce EgoVITA, a reinforcement learning framework that enables MLLMs to reason through structured planning and verification. Built on Group Relative Policy Optimization (GRPO), EgoVITA alternates between two stages: (1) an egocentric planning phase, where the model reasons from a first-person viewpoint to predict a step-by-step plan of future actions, and (2) an exocentric verification phase, where it switches to a third-person perspective to check the visual and logical consistency of that plan.
+          </p>
+           <p>
+            Through GRPO, the model learns to make plans that are causally predictive of upcoming visual observations, leading to more coherent and visually grounded reasoning. EgoVITA achieves significant gains on egocentric reasoning tasks, outperforming the baseline Qwen2.5-VL-7B by +7.7 on EgoBlind and +4.4 on EgoOrient, while maintaining strong generalization on exocentric video tasks.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+  if ($navbarBurgers.length > 0) {
+    $navbarBurgers.forEach( el => {
+      el.addEventListener('click', () => {
+        const target = el.dataset.target;
+        const $target = document.getElementById(target);
+        el.classList.toggle('is-active');
+        if ($target) {
+            $target.classList.toggle('is-active');
+        }
+      });
+    });
+  }
+});
+</script>
+
+</body>
+</html>
