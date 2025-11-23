@@ -33,14 +33,6 @@
         height: auto;
         display: block;
         margin: 0 auto;
-        border-radius: 4px; 
-    }
-
-    /* New class to constrain grid images */
-    .result-image {
-        max-height: 300px;
-        width: auto;
-        object-fit: contain;
     }
 
     .animated-gradient-title {
@@ -74,13 +66,7 @@
       25% { transform: rotate(-5deg) scale(1.1); }
       75% { transform: rotate(5deg) scale(0.9); }
     }
-    
-    .box-gray {
-        background-color: #f5f5f5;
-        border-radius: 8px;
-        padding: 1.5rem;
-        height: 100%;
-    }
+
   </style>
 
 </head>
@@ -127,17 +113,12 @@
            <h2 class="subtitle is-3 publication-subtitle">
              Learning to Plan and Verify for Egocentric Video Reasoning
            </h2>
-<div class="is-size-5 publication-authors">
-
-            <span class="author-block"><a href="https://yogkul2000.github.io/">Yogesh Kulkarni</a><sup style="color:#6fbf73;">1</sup>,</span>
-
-            <span class="author-block"><a href="https://www.pooyanfazli.com/">Pooyan Fazli</a><sup style="color:#6fbf73;">1</sup></span>
-
+           <div class="is-size-5 publication-authors">
+            <span class="author-block">Anonymous CVPR Submission</span>
              </div>
-                       <div class="is-size-5 publication-authors">
 
-             <span class="author-block"><sup style="color:#6fbf73;">1</sup>Arizona State University</span><br>
-
+          <div class="is-size-5 publication-authors">
+             <span class="author-block">Paper ID 9371</span><br>
            </div>
 
           <div class="column has-text-centered">
@@ -178,7 +159,7 @@
   <div class="container is-max-desktop">
     <div class="content has-text-centered">
        <div class="placeholder-box">
-         <img src="static/images/teaser.png" alt="EgoVITA Framework Overview" style="width: 70%;">
+         <img src="static/images/figure1_teaser.png" alt="EgoVITA Framework Overview" style="width: 70%;">
        </div>
        <p>EgoVITA enables safer, structured egocentric reasoning. For first-person queries, it produces grounded, stepwise plans anticipating actions and spatial constraints, whereas baseline models give generic, unsafe, visually ungrounded responses.</p>
     </div>
@@ -218,7 +199,7 @@
                
                 <h3 class="title is-4">Training Pipeline</h3>
                 <div class="placeholder-box">
-                  <img src="static/images/pipeline.jpg" alt="EgoVITA Training Pipeline" style="max-width: 50%;">
+                  <img src="static/images/figure2_pipeline.png" alt="EgoVITA Training Pipeline">
                 </div>
                 <p>
                     <b>Stage I: Supervised Fine-Tuning (SFT):</b> The policy model is initialized to learn the structured output format with three components: egocentric planning, exocentric verification, and final answer generation. This stage establishes a stable base policy capable of generating structured outputs.
@@ -228,30 +209,28 @@
                 </p>
 
                 <h3 class="title is-4">Anticipatory Cross-Modal Grounding (ACMG)</h3>
-                
-                <div class="columns is-centered is-vcentered">
-                    <div class="column">
-                        <div class="placeholder-box">
-                          <img src="static/images/acmg.jpg" alt="ACMG Mechanism">
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="placeholder-box">
-                          <img src="static/images/acmg_heatmap.jpg" alt="Temporal Grounding Heatmap">
-                        </div>
-                    </div>
+                <div class="placeholder-box">
+                  <img src="static/images/figure3_acmg.png" alt="ACMG Mechanism" width="70%">
                 </div>
-                
                 <p>
                     ACMG is a novel dense reward mechanism that ensures generated plans are temporally predictive and visually grounded. Each plan clause is projected into visual space via a trainable Anticipation Head and compared to future frames using cosine similarity. The reward measures how well the predicted visual embedding matches any of the next N=16 frames, encouraging the model to anticipate what will happen next rather than just describing the current scene.
                 </p>
+
+                <div class="placeholder-box">
+                  <img src="static/images/figure4_temporal_grounding.png" alt="Temporal Grounding Heatmap" width="70%">
+                </div>
                 <p>
-                    The temporal grounding heatmap (right) shows how different plan clauses align with future frames. Earlier clauses ground to near-future frames while later clauses align with more distant events, demonstrating that the model learns temporally structured anticipation.
+                    The temporal grounding heatmap shows how different plan clauses align with future frames. Earlier clauses ground to near-future frames while later clauses align with more distant events, demonstrating that the model learns temporally structured anticipation.
                 </p>
 
-                <h3 class="title is-4">Composite Reward Function & Regularization</h3>
+                <h3 class="title is-4">Composite Reward Function</h3>
                 <p>
-                    EgoVITA uses a weighted combination of four reward components: (1) Format Reward, (2) Answer Reward, (3) ACMG Reward, and (4) Confidence Reward. To prevent catastrophic forgetting, we periodically interleave GRPO updates with lightweight exocentric regularization on held-out VideoQA data.
+                    EgoVITA uses a weighted combination of four reward components: (1) Format Reward checks for correct tag usage and output structure, (2) Answer Reward measures factual alignment with ground truth, (3) ACMG Reward promotes temporal and visual grounding of predicted plans, and (4) Confidence Reward encourages coherent and consistent reasoning through log-probability alignment.
+                </p>
+
+                <h3 class="title is-4">Exocentric Regularization</h3>
+                <p>
+                    To prevent catastrophic forgetting of general visual reasoning capabilities, EgoVITA periodically interleaves GRPO updates with lightweight exocentric regularization. After every 200 RL iterations, the model is evaluated on held-out exocentric VideoQA data, preserving general understanding while enabling specialization on egocentric tasks.
                 </p>
 
              </div>
@@ -269,89 +248,81 @@
         <h3 class="title is-4 has-text-centered">Main Results Across Foundation Models</h3>
         <div class="content has-text-justified">
            <p>
-               EgoVITA consistently improves egocentric video understanding across multiple foundation models. On Qwen2.5-VL-7B, it achieves substantial gains of +7.7 on EgoBlind, +3.7 on EgoThink, and +4.4 on EgoOrient. Importantly, EgoVITA not only improves egocentric reasoning but also maintains or enhances performance on exocentric benchmarks.
+               EgoVITA consistently improves egocentric video understanding across multiple foundation models. On Qwen2.5-VL-7B, it achieves substantial gains of +7.7 on EgoBlind, +3.7 on EgoThink, and +4.4 on EgoOrient. The framework also demonstrates strong performance on InternVL-3.5 and Qwen3-VL, with improvements that are statistically significant at α = 0.05.
            </p>
            <div class="placeholder-box">
-               <img src="static/images/main_table.png" alt="Main Results Table">
+               <img src="static/images/table1_main_results.png" alt="Main Results Table">
+           </div>
+           <p>
+               Importantly, EgoVITA not only improves egocentric reasoning but also maintains or enhances performance on exocentric benchmarks, achieving gains on MVBench, Video-MME, and LVBench. This demonstrates effective view-invariant learning without catastrophic forgetting.
+           </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h3 class="title is-4 has-text-centered">Comparison with State-of-the-Art</h3>
+        <div class="content has-text-justified">
+           <p>
+               EgoVITA outperforms recent egocentric reasoning models including EgoThinker and EgoVLM on multiple benchmarks. Despite using far fewer training samples (47k vs. 5M for EgoThinker), EgoVITA achieves higher accuracy on EgoSchema (75.8 vs. 67.6) and EgoPlan (35.0 vs. 33.1), demonstrating the effectiveness of dense multimodal rewards for guided planning and verification.
+           </p>
+           <div class="placeholder-box">
+               <img src="static/images/table2_sota_comparison.png" alt="State-of-the-Art Comparison">
            </div>
         </div>
       </div>
     </div>
 
-    <div class="columns is-centered is-multiline">
-        <div class="column is-5">
-            <h3 class="title is-5 has-text-centered">Comparison with SOTA</h3>
-            <div class="content has-text-justified is-size-6">
-               <p>
-                   EgoVITA outperforms recent egocentric reasoning models including EgoThinker and EgoVLM. Despite using far fewer training samples (47k vs. 5M for EgoThinker), EgoVITA achieves higher accuracy, demonstrating the effectiveness of dense multimodal rewards.
-               </p>
-               <div class="placeholder-box">
-                   <img src="static/images/sota_compare.png" alt="State-of-the-Art Comparison" class="result-image">
-               </div>
-            </div>
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h3 class="title is-4 has-text-centered">Ablation Studies</h3>
+        <div class="content has-text-justified">
+           <p>
+               Comprehensive ablation studies validate the importance of each component. The ACMG and Confidence rewards are complementary, with the full system achieving greater improvements than either reward alone. The disentangled reasoning structure is essential, as removing either the egocentric planning or exocentric verification stage degrades performance on their respective task types.
+           </p>
+           <div class="placeholder-box">
+               <img src="static/images/table3_ablation_rewards.png" alt="Reward Component Ablation">
+           </div>
+           <div class="placeholder-box">
+               <img src="static/images/table4_ablation_structure.png" alt="Structure Ablation">
+           </div>
+           <p>
+               Analysis of anticipation window size (N) shows that N=16 provides optimal balance between capturing delayed actions and avoiding spurious correlations. Comparison with present-frame grounding confirms that anticipatory grounding substantially outperforms describing only the current scene.
+           </p>
+           <div class="placeholder-box">
+               <img src="static/images/table5_anticipation_vs_present.png" alt="Anticipatory vs Present Grounding">
+           </div>
         </div>
-        <div class="column is-5">
-            <h3 class="title is-5 has-text-centered">Embedding Space Analysis</h3>
-            <div class="content has-text-justified is-size-6">
-               <p>
-                   t-SNE visualization of the ACMG embedding space reveals semantically structured clusters. Strong alignment between text clauses, predicted visual embeddings, and actual matched frames confirms that EgoVITA learns meaningful task semantics.
-               </p>
-               <div class="placeholder-box">
-                   <img src="static/images/embedding.png" alt="ACMG Embedding Space Visualization" class="result-image">
-               </div>
-            </div>
-        </div>
+      </div>
     </div>
 
-    <br>
-    
     <div class="columns is-centered">
-        <div class="column is-four-fifths">
-            <h3 class="title is-4 has-text-centered">Ablation & Exocentric Analysis</h3>
-            <p class="has-text-centered is-size-6 mb-4">Comprehensive studies validate the importance of each component and the stability of the framework.</p>
-            
-            <div class="columns is-multiline is-centered">
-                <div class="column is-6">
-                    <div class="box-gray">
-                        <h4 class="title is-6 has-text-centered">Reward Components</h4>
-                        <div class="placeholder-box">
-                            <img src="static/images/reward.png" alt="Reward Component Ablation" class="result-image">
-                        </div>
-                        <p class="is-size-7">The ACMG and Confidence rewards are complementary, with the full system achieving greater improvements than either alone.</p>
-                    </div>
-                </div>
-
-                <div class="column is-6">
-                    <div class="box-gray">
-                        <h4 class="title is-6 has-text-centered">Reasoning Structure</h4>
-                        <div class="placeholder-box">
-                            <img src="static/images/structure.png" alt="Structure Ablation" class="result-image">
-                        </div>
-                        <p class="is-size-7">Removing either the egocentric planning or exocentric verification stage degrades performance on their respective task types.</p>
-                    </div>
-                </div>
-
-                <div class="column is-6">
-                    <div class="box-gray">
-                        <h4 class="title is-6 has-text-centered">Anticipation vs Present</h4>
-                        <div class="placeholder-box">
-                            <img src="static/images/acmg_vs_present.png" alt="Anticipatory vs Present Grounding" class="result-image">
-                        </div>
-                        <p class="is-size-7">Comparison with present-frame grounding confirms that anticipatory grounding substantially outperforms describing only the current scene.</p>
-                    </div>
-                </div>
-
-                <div class="column is-6">
-                    <div class="box-gray">
-                        <h4 class="title is-6 has-text-centered">Exocentric Regularization</h4>
-                        <div class="placeholder-box">
-                            <img src="static/images/exo.png" alt="Exocentric Regularization Impact" class="result-image">
-                        </div>
-                        <p class="is-size-7">Regularization (solid red line) reverses the catastrophic forgetting observed in standard SFT (dotted red line), recovering performance.</p>
-                    </div>
-                </div>
-            </div>
+      <div class="column is-four-fifths">
+        <h3 class="title is-4 has-text-centered">Embedding Space Analysis</h3>
+        <div class="content has-text-justified">
+           <p>
+               t-SNE visualization of the ACMG embedding space reveals semantically structured clusters corresponding to procedural steps (Move, Locate, Action, Verify, Complete). Strong alignment between text clauses, predicted visual embeddings, and actual matched frames confirms that EgoVITA learns meaningful, grounded task semantics.
+           </p>
+           <div class="placeholder-box">
+               <img src="static/images/figure5_embedding_space.png" alt="ACMG Embedding Space Visualization" width="60%">
+           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h3 class="title is-4 has-text-centered">Impact of Exocentric Regularization</h3>
+        <div class="content has-text-justified">
+           <p>
+               Training on egocentric data via SFT causes an initial performance drop on exocentric benchmarks due to overfitting. Without regularization, this decline continues throughout training. EgoVITA's exocentric regularization successfully reverses this trend, recovering and ultimately improving upon the original base model's performance across MVBench, Video-MME, LVBench, and TOMATO.
+           </p>
+           <div class="placeholder-box">
+               <img src="static/images/figure1_supp_regularization.png" alt="Exocentric Regularization Impact">
+           </div>
+        </div>
+      </div>
     </div>
 
     <div class="columns is-centered">
@@ -359,10 +330,30 @@
         <h3 class="title is-4 has-text-centered">Qualitative Examples</h3>
         <div class="content has-text-justified">
            <p>
-               Qualitative comparisons demonstrate EgoVITA's superior reasoning capabilities. For a blind person crossing an intersection, EgoVITA generates sequential, safety-critical actions grounded in specific visual frames.
+               Qualitative comparisons demonstrate EgoVITA's superior reasoning capabilities. For a blind person crossing an intersection, EgoVITA generates sequential, safety-critical actions grounded in specific visual frames, while the baseline provides generic, unsafe recommendations. For procedural tasks like grapevine pruning, EgoVITA specifies systematic, step-by-step approaches with exocentric verification confirming visual consistency.
            </p>
            <div class="placeholder-box">
-               <img src="static/images/qual.png" alt="Qualitative Examples">
+               <img src="static/images/figure6_qualitative.png" alt="Qualitative Examples">
+           </div>
+           <div class="placeholder-box">
+               <img src="static/images/figure4_supp_qualitative2.png" alt="Additional Qualitative Examples">
+           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h3 class="title is-4 has-text-centered">Detailed ACMG Analysis</h3>
+        <div class="content has-text-justified">
+           <p>
+               Analysis of 500 egocentric plan samples reveals that ACMG provides position-sensitive grounding signals. Middle clauses (target localization and action execution) receive significantly higher rewards and show stronger correlations with final answer correctness compared to navigation or completion steps, demonstrating adaptive selectivity for task-critical visual grounding.
+           </p>
+           <div class="placeholder-box">
+               <img src="static/images/figure2_supp_acmg_single_clause.png" alt="ACMG Single Clause Analysis">
+           </div>
+           <div class="placeholder-box">
+               <img src="static/images/figure3_supp_acmg_position.png" alt="ACMG Reward by Position" width="60%">
            </div>
         </div>
       </div>
@@ -371,15 +362,58 @@
     </div>
 </section>
 
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Additional Ablations</h2>
+    
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          <h3 class="title is-4 has-text-centered">Pooling Strategy for ACMG</h3>
+          <p>
+            Max pooling is crucial for ACMG's effectiveness. Mean pooling dilutes the reward signal by averaging across all N=16 frames, punishing correct but sparse temporal alignments. Max pooling finds peak evidence that predicted events occur within the window, providing stronger learning signals while remaining robust to temporal shifts.
+          </p>
+          <div class="placeholder-box">
+            <img src="static/images/table1_supp_pooling.png" alt="Pooling Strategy Ablation">
+          </div>
+
+          <h3 class="title is-4 has-text-centered">Teacher-Guided Warm-up Duration</h3>
+          <p>
+            The 200-step teacher-guided warm-up phase for the confidence reward provides useful initialization, though the self-ranking mechanism proves robust enough to achieve substantial gains even without explicit teacher supervision. The warm-up helps the model learn stable verification patterns before transitioning to self-improvement.
+          </p>
+          <div class="placeholder-box">
+            <img src="static/images/table2_supp_warmup.png" alt="Teacher Warm-up Ablation">
+          </div>
+
+          <h3 class="title is-4 has-text-centered">Anticipation Window Sensitivity</h3>
+          <p>
+            Performance is sensitive to the anticipation window size N. Small windows (N=4 or N=8) are too myopic to capture delayed actions, while large windows (N=32) introduce noisy spurious correlations. N=16 provides optimal balance between flexibility for temporal shifts and precision for causal predictions.
+          </p>
+          <div class="placeholder-box">
+            <img src="static/images/table3_supp_window.png" alt="Anticipation Window Ablation">
+          </div>
+
+          <h3 class="title is-4 has-text-centered">Vision Component Training</h3>
+          <p>
+            Joint adaptation of both vision encoder and projector is critical for optimal performance. Training with frozen vision features yields minimal gains (+2.4), while adapting only the projector or encoder shows intermediate improvements. The full system with end-to-end visual adaptation achieves the strongest results (+7.7 on EgoBlind).
+          </p>
+          <div class="placeholder-box">
+            <img src="static/images/table6_supp_vision_components.png" alt="Vision Component Training Ablation">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title is-3 has-text-centered">BibTeX</h2>
-    <pre><code>@article{kulkarniegovita2025,
+    <pre><code>@inproceedings{egovita2026,
   title={EgoVITA: Learning to Plan and Verify for Egocentric Video Reasoning},
-  author={Yogesh Kulkarni and Pooyan Fazli},
-  journal={arXiv preprint arXiv:{xxxxx.xxxxx}},
-  year={2025}
+  author={Anonymous},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year={2026}
 }</code></pre>
   </div>
 </section>
@@ -399,7 +433,6 @@
     </div>
   </div>
 </footer>
-
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
